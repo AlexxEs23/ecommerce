@@ -10,18 +10,17 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Ambil produk untuk flash sale (misalnya produk dengan diskon)
+        // Ambil produk untuk flash sale (produk terbaru)
         $flashSaleProducts = Produk::with(['kategori', 'user'])
             ->where('status', true)
             ->latest()
-            ->take(6)
+            ->take(8)
             ->get();
         
-        // Ambil produk rekomendasi
+        // Ambil semua produk untuk rekomendasi
         $recommendedProducts = Produk::with(['kategori', 'user'])
             ->where('status', true)
-            ->inRandomOrder()
-            ->take(10)
+            ->latest()
             ->get();
         
         // Ambil semua kategori

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -88,5 +90,45 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         
         return redirect('/')->with('success', 'Anda telah berhasil logout.');
+    }
+
+    // Google OAuth Methods
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+        try {
+            $googleUser = Socialite::driver('google')->user();
+            
+            // Cari user berdasarkan email
+            $user = User::where('email', $googleUser->email)->first();
+            
+            if ($user) {
+                // User sudah ada, langsung login
+                Auth::login($user);
+            } else {
+                // User belum ada, buat akun baru
+                $user = User::create([
+                    'name' => $googleUser->name,
+                    'email' => $googleUser->email,
+                    'password' => Hash::make(Str::random(24)), // Random password karena login via Google
+                    'no_hp' => '-', // Default karena Google tidak memberikan no HP
+                    'alamat' => '-', // Default
+                    'role' => 'user', // Default role untuk Google login
+                    'status' => 'aktif',
+                    'status_approval' => 'approved', // Auto approved untuk user biasa
+                ]);
+                
+                Auth::login($user);
+            }
+            
+            return redirect('/dashboard')->with('success', 'Login dengan Google berhasil!');
+            
+        } catch (\Exception $e) {
+            return redirect('/login')->with('error', 'Gagal login dengan Google. Silakan coba lagi.');
+        }
     }
 }

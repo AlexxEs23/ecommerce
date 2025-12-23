@@ -15,9 +15,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('produk_id')->constrained('produk')->onDelete('cascade');
+            $table->string('nama_penerima');
+            $table->string('no_hp');
+            $table->enum('metode_pembayaran', ['transfer_bank', 'cod']);
+            $table->string('catatan_pembeli')->nullable();
             $table->integer('jumlah');
             $table->decimal('total', 12, 2);
-            $table->string('status')->default('pending');
+            $table->enum('status', ['menunggu', 'diproses', 'dikirim', 'selesai', 'dibatalkan'])->default('menunggu');
             $table->text('alamat');
             $table->timestamps();
         });
