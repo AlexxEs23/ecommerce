@@ -67,11 +67,16 @@ class AuthController extends Controller
             'no_hp' => $request->no_hp,
             'alamat' => $request->alamat,
             'role' => $request->role,
+            'status_approval' => $request->role === 'penjual' ? 'pending' : 'approved',
             'password' => Hash::make($request->password)
         ]);
 
         Auth::login($user);
         $request->session()->regenerate();
+
+        if ($request->role === 'penjual') {
+            return redirect('/dashboard')->with('info', 'Registrasi berhasil! Akun Anda sedang menunggu persetujuan admin. Anda bisa login namun belum bisa mengelola produk.');
+        }
 
         return redirect('/dashboard')->with('success', 'Registrasi berhasil! Selamat datang di UMKM Market.');
     }

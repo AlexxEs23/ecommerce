@@ -31,6 +31,12 @@
             <span class="text-xl">📊</span>
             <span class="font-medium">Dashboard</span>
         </a>
+        
+        <!-- Profil - Semua Role -->
+        <a href="{{ route('profile.show') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition {{ request()->routeIs('profile.*') ? 'bg-purple-700' : '' }}">
+            <span class="text-xl">👤</span>
+            <span class="font-medium">Profil Saya</span>
+        </a>
 
         <!-- Menu Admin -->
         @if(Auth::user()->role === 'admin')
@@ -41,6 +47,11 @@
             <a href="{{ route('admin.users.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition {{ request()->routeIs('admin.users.*') ? 'bg-purple-700' : '' }}">
                 <span class="text-xl">👥</span>
                 <span class="font-medium">Kelola Pengguna</span>
+            </a>
+
+            <a href="{{ route('admin.seller.approval') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition {{ request()->routeIs('admin.seller.*') ? 'bg-purple-700' : '' }}">
+                <span class="text-xl">✅</span>
+                <span class="font-medium">Approval Penjual</span>
             </a>
 
             <a href="{{ route('produk.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition {{ request()->routeIs('produk.*') ? 'bg-purple-700' : '' }}">

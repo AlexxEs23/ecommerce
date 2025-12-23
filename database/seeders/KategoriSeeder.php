@@ -10,14 +10,16 @@ class KategoriSeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            ['nama_kategori' => 'Fashion', 'deskripsi' => 'Pakaian, aksesoris, dan fashion items'],
-            ['nama_kategori' => 'Makanan', 'deskripsi' => 'Makanan dan minuman'],
-            ['nama_kategori' => 'Kerajinan', 'deskripsi' => 'Kerajinan tangan dan seni'],
-            ['nama_kategori' => 'Kecantikan', 'deskripsi' => 'Produk kecantikan dan perawatan'],
-            ['nama_kategori' => 'Buku', 'deskripsi' => 'Buku dan publikasi'],
-            ['nama_kategori' => 'Elektronik', 'deskripsi' => 'Perangkat elektronik dan gadget'],
-            ['nama_kategori' => 'Rumah Tangga', 'deskripsi' => 'Perlengkapan rumah tangga'],
-            ['nama_kategori' => 'Olahraga', 'deskripsi' => 'Perlengkapan olahraga dan fitness'],
+            ['nama_kategori' => 'Fashion', 'icon' => '👕'],
+            ['nama_kategori' => 'Makanan', 'icon' => '🍽️'],
+            ['nama_kategori' => 'Kerajinan', 'icon' => '🎨'],
+            ['nama_kategori' => 'Kecantikan', 'icon' => '💄'],
+            ['nama_kategori' => 'Buku', 'icon' => '📚'],
+            ['nama_kategori' => 'Elektronik', 'icon' => '⚡'],
+            ['nama_kategori' => 'Rumah Tangga', 'icon' => '🏠'],
+            ['nama_kategori' => 'Olahraga', 'icon' => '⚽'],
+            ['nama_kategori' => 'Hobi', 'icon' => '🎮'],
+            ['nama_kategori' => 'Otomotif', 'icon' => '🚗'],
         ];
 
         foreach ($categories as $category) {

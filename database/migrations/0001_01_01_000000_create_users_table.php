@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('alamat');
             $table->enum('role', ['admin', 'penjual', 'user']);
             $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
+            $table->enum('status_approval', ['pending', 'approved', 'rejected'])->default('approved');
             $table->timestamps();
         });
 

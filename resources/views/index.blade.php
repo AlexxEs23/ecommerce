@@ -82,15 +82,12 @@
             
             <!-- Category Menu -->
             <div class="border-t border-gray-200 py-3">
-                <div class="flex items-center gap-6 text-sm">
-                    <a href="#" class="text-gray-700 hover:text-purple-600 transition font-medium">🏠 Semua Kategori</a>
-                    <a href="#" class="text-gray-700 hover:text-purple-600 transition">👕 Fashion</a>
-                    <a href="#" class="text-gray-700 hover:text-purple-600 transition">🍽️ Makanan</a>
-                    <a href="#" class="text-gray-700 hover:text-purple-600 transition">🎨 Kerajinan</a>
-                    <a href="#" class="text-gray-700 hover:text-purple-600 transition">💄 Kecantikan</a>
-                    <a href="#" class="text-gray-700 hover:text-purple-600 transition">📚 Buku</a>
-                    <a href="#" class="text-gray-700 hover:text-purple-600 transition">⚡ Elektronik</a>
-                    <a href="#" class="text-purple-600 font-medium">🔥 Promo Hari Ini</a>
+                <div class="flex items-center gap-6 text-sm overflow-x-auto">
+                    <a href="#" class="text-gray-700 hover:text-purple-600 transition font-medium whitespace-nowrap">🏠 Semua Kategori</a>
+                    @foreach($categories as $category)
+                        <a href="#" class="text-gray-700 hover:text-purple-600 transition whitespace-nowrap">{{ $category->nama_kategori }}</a>
+                    @endforeach
+                    <a href="#" class="text-purple-600 font-medium whitespace-nowrap">🔥 Promo Hari Ini</a>
                 </div>
             </div>
         </div>
@@ -115,109 +112,46 @@
     </section>
 
     <!-- Category Shortcuts -->
-    <section class="bg-white py-8">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center overflow-x-auto gap-4 pb-2">
-                <div class="flex flex-col items-center min-w-[80px] cursor-pointer hover:scale-110 transition">
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center mb-2 shadow-lg">
-                        <span class="text-2xl">👕</span>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700">Fashion</span>
-                </div>
-                <div class="flex flex-col items-center min-w-[80px] cursor-pointer hover:scale-110 transition">
-                    <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center mb-2 shadow-lg">
-                        <span class="text-2xl">🍽️</span>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700">Makanan</span>
-                </div>
-                <div class="flex flex-col items-center min-w-[80px] cursor-pointer hover:scale-110 transition">
-                    <div class="w-16 h-16 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center mb-2 shadow-lg">
-                        <span class="text-2xl">💄</span>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700">Kecantikan</span>
-                </div>
-                <div class="flex flex-col items-center min-w-[80px] cursor-pointer hover:scale-110 transition">
-                    <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mb-2 shadow-lg">
-                        <span class="text-2xl">⚡</span>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700">Elektronik</span>
-                </div>
-                <div class="flex flex-col items-center min-w-[80px] cursor-pointer hover:scale-110 transition">
-                    <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mb-2 shadow-lg">
-                        <span class="text-2xl">🎨</span>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700">Kerajinan</span>
-                </div>
-                <div class="flex flex-col items-center min-w-[80px] cursor-pointer hover:scale-110 transition">
-                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mb-2 shadow-lg">
-                        <span class="text-2xl">🏠</span>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700">Rumah</span>
-                </div>
-                <div class="flex flex-col items-center min-w-[80px] cursor-pointer hover:scale-110 transition">
-                    <div class="w-16 h-16 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-full flex items-center justify-center mb-2 shadow-lg">
-                        <span class="text-2xl">📚</span>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700">Buku</span>
-                </div>
-                <div class="flex flex-col items-center min-w-[80px] cursor-pointer hover:scale-110 transition">
-                    <div class="w-16 h-16 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center mb-2 shadow-lg">
-                        <span class="text-2xl">🎮</span>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700">Hobi</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Flash Sale Section -->
-    <section class="bg-gradient-to-br from-purple-50 to-purple-100 py-8">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center mb-6">
-                <div class="flex items-center gap-3">
-                    <h2 class="text-3xl font-bold text-gray-800">⚡ Flash Sale</h2>
-                    <div class="bg-red-500 text-white px-4 py-2 rounded-lg font-bold">
-                        Berakhir dalam: 02:45:30
-                    </div>
-                </div>
-                <a href="#" class="text-purple-600 font-semibold hover:text-purple-700">Lihat Semua →</a>
+    <section class="bg-white py-12 relative overflow-hidden">
+        <!-- Decorative Background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-blue-50 opacity-60"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Belanja Berdasarkan Kategori</h2>
+                <p class="text-gray-600">Temukan produk UMKM terbaik sesuai kebutuhan Anda</p>
             </div>
             
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                @forelse($flashSaleProducts as $product)
-                <!-- Product Card -->
-                <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden group">
-                    <div class="relative">
-                        <div class="aspect-square bg-gray-200 flex items-center justify-center overflow-hidden">
-                            @if($product->gambar)
-                                <img src="{{ asset('storage/' . $product->gambar) }}" 
-                                     alt="{{ $product->nama_produk }}"
-                                     class="w-full h-full object-cover group-hover:scale-110 transition">
-                            @else
-                                <div class="text-6xl group-hover:scale-110 transition">📦</div>
-                            @endif
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-8 xl:grid-cols-10 gap-6">
+                <!-- Tombol Semua -->
+                <button onclick="filterCategory('all')" class="group category-btn" data-category="all">
+                    <div class="bg-white rounded-2xl p-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border-2 border-purple-600">
+                        <div class="w-16 h-16 mx-auto bg-gradient-to-br from-gray-500 to-gray-600 rounded-2xl flex items-center justify-center mb-3 shadow-lg shadow-gray-200 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                            <span class="text-3xl transform group-hover:scale-110 transition-transform duration-300">🏠</span>
                         </div>
-                        <div class="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-                            SALE
-                        </div>
+                        <p class="text-xs font-semibold text-gray-700 text-center leading-tight group-hover:text-purple-600 transition-colors">Semua</p>
                     </div>
-                    <div class="p-3">
-                        <h3 class="text-sm font-semibold text-gray-800 mb-1 line-clamp-2">{{ $product->nama_produk }}</h3>
-                        <div class="flex items-center gap-1 mb-2">
-                            <span class="text-yellow-400">⭐</span>
-                            <span class="text-xs text-gray-600">{{ $product->kategori->nama_kategori ?? 'Umum' }}</span>
+                </button>
+                
+                @foreach($categories as $index => $category)
+                <button onclick="filterCategory({{ $category->id }})" class="group category-btn" data-category="{{ $category->id }}">
+                    <div class="bg-white rounded-2xl p-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-gray-100">
+                        @php
+                            $colors = ['from-purple-500 to-purple-600', 'from-orange-500 to-orange-600', 'from-pink-500 to-pink-600', 'from-blue-500 to-blue-600', 'from-green-500 to-green-600', 'from-yellow-500 to-yellow-600', 'from-indigo-500 to-indigo-600', 'from-red-500 to-red-600', 'from-teal-500 to-teal-600', 'from-cyan-500 to-cyan-600'];
+                            $shadows = ['shadow-purple-200', 'shadow-orange-200', 'shadow-pink-200', 'shadow-blue-200', 'shadow-green-200', 'shadow-yellow-200', 'shadow-indigo-200', 'shadow-red-200', 'shadow-teal-200', 'shadow-cyan-200'];
+                            $colorBg = $colors[$index % count($colors)];
+                            $colorShadow = $shadows[$index % count($shadows)];
+                            
+                            $icons = ['Fashion' => '👕', 'Makanan' => '🍽️', 'Kerajinan' => '🎨', 'Kecantikan' => '💄', 'Buku' => '📚', 'Elektronik' => '⚡', 'Rumah Tangga' => '🏠', 'Olahraga' => '⚽', 'Hobi' => '🎮', 'Otomotif' => '🚗'];
+                            $icon = $icons[$category->nama_kategori] ?? '📦';
+                        @endphp
+                        <div class="w-16 h-16 mx-auto bg-gradient-to-br {{ $colorBg }} rounded-2xl flex items-center justify-center mb-3 shadow-lg {{ $colorShadow }} group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                            <span class="text-3xl transform group-hover:scale-110 transition-transform duration-300">{{ $icon }}</span>
                         </div>
-                        <span class="text-lg font-bold text-purple-600">Rp {{ number_format($product->harga, 0, ',', '.') }}</span>
-                        <div class="mt-1 text-xs text-gray-500">
-                            Stok: {{ $product->stok }}
-                        </div>
+                        <p class="text-xs font-semibold text-gray-700 text-center leading-tight group-hover:text-purple-600 transition-colors">{{ $category->nama_kategori }}</p>
                     </div>
-                </div>
-                @empty
-                <div class="col-span-6 text-center py-8 text-gray-500">
-                    Belum ada produk flash sale
-                </div>
-                @endforelse
+                </button>
+                @endforeach
             </div>
         </div>
     </section>
@@ -238,7 +172,7 @@
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 @forelse($recommendedProducts as $product)
                 <!-- Product -->
-                <div class="bg-white border border-gray-200 rounded-xl hover:shadow-xl transition cursor-pointer overflow-hidden group">
+                <div class="product-card bg-white border border-gray-200 rounded-xl hover:shadow-xl transition cursor-pointer overflow-hidden group" data-category="{{ $product->kategori_id }}">
                     <div class="relative">
                         <div class="aspect-square bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center overflow-hidden">
                             @if($product->gambar)
@@ -289,7 +223,7 @@
                     <h2 class="text-3xl font-bold mb-2">🎉 Jadi Seller Sekarang!</h2>
                     <p class="text-lg opacity-90">Mulai bisnis online Anda bersama ribuan UMKM Indonesia lainnya</p>
                 </div>
-                <a href="/auth/register" class="px-8 py-4 bg-yellow-400 text-purple-900 rounded-lg font-bold text-lg hover:bg-yellow-300 hover:shadow-xl transition transform hover:-translate-y-1">
+                <a href="{{ route('register') }}" class="px-8 py-4 bg-yellow-400 text-purple-900 rounded-lg font-bold text-lg hover:bg-yellow-300 hover:shadow-xl transition transform hover:-translate-y-1">
                     Daftar Gratis
                 </a>
             </div>
@@ -362,29 +296,6 @@
                 </div>
             </div>
             
-            <!-- Payment Methods -->
-            <div class="border-t border-gray-800 pt-8 mb-8">
-                <h4 class="font-bold text-lg mb-4">Metode Pembayaran</h4>
-                <div class="flex flex-wrap gap-3">
-                    <div class="bg-white px-4 py-2 rounded-lg text-sm font-semibold text-gray-700">💳 Bank Transfer</div>
-                    <div class="bg-white px-4 py-2 rounded-lg text-sm font-semibold text-gray-700">💰 E-Wallet</div>
-                    <div class="bg-white px-4 py-2 rounded-lg text-sm font-semibold text-gray-700">🏪 Minimarket</div>
-                    <div class="bg-white px-4 py-2 rounded-lg text-sm font-semibold text-gray-700">📱 QRIS</div>
-                </div>
-            </div>
-
-            <!-- Shipping -->
-            <div class="border-t border-gray-800 pt-8 mb-8">
-                <h4 class="font-bold text-lg mb-4">Jasa Pengiriman</h4>
-                <div class="flex flex-wrap gap-3">
-                    <div class="bg-white px-4 py-2 rounded-lg text-sm font-semibold text-gray-700">📦 JNE</div>
-                    <div class="bg-white px-4 py-2 rounded-lg text-sm font-semibold text-gray-700">🚚 J&T</div>
-                    <div class="bg-white px-4 py-2 rounded-lg text-sm font-semibold text-gray-700">🚛 SiCepat</div>
-                    <div class="bg-white px-4 py-2 rounded-lg text-sm font-semibold text-gray-700">📮 POS Indonesia</div>
-                    <div class="bg-white px-4 py-2 rounded-lg text-sm font-semibold text-gray-700">🏍️ GoSend</div>
-                </div>
-            </div>
-            
             <!-- Copyright -->
             <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
                 <p>&copy; 2024 UMKM Market. All Rights Reserved. Made with ❤️ for Indonesian UMKM</p>
@@ -392,5 +303,37 @@
         </div>
     </footer>
 
+    <script>
+        function filterCategory(categoryId) {
+            // Update active button
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if (btn.dataset.category == categoryId) {
+                    btn.querySelector('div').classList.add('border-2', 'border-purple-600', 'shadow-2xl');
+                    btn.querySelector('div').classList.remove('border-gray-100');
+                } else {
+                    btn.querySelector('div').classList.remove('border-2', 'border-purple-600', 'shadow-2xl');
+                    btn.querySelector('div').classList.add('border-gray-100');
+                }
+            });
+            
+            // Filter products
+            const products = document.querySelectorAll('.product-card');
+            let visibleCount = 0;
+            
+            products.forEach(product => {
+                const productCategory = product.dataset.category;
+                
+                if (categoryId === 'all' || productCategory == categoryId) {
+                    product.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+            
+            // Show message if no products
+            console.log('Filtered:', visibleCount, 'products for category:', categoryId);
+        }
+    </script>
 </body>
 </html>

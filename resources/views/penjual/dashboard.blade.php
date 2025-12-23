@@ -21,6 +21,61 @@
             </div>
         @endif
 
+        @if (session('info'))
+            <div class="mb-6 bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                <div class="flex items-center">
+                    <span class="text-blue-500 mr-2 text-xl">ℹ</span>
+                    <p class="text-sm text-blue-700">{{ session('info') }}</p>
+                </div>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                <div class="flex items-center">
+                    <span class="text-red-500 mr-2 text-xl">✕</span>
+                    <p class="text-sm text-red-700">{{ session('error') }}</p>
+                </div>
+            </div>
+        @endif
+
+        @if(Auth::user()->status_approval === 'pending')
+            <div class="mb-6 bg-yellow-50 border-2 border-yellow-400 rounded-xl p-6 shadow-lg">
+                <div class="flex items-start">
+                    <div class="text-5xl mr-4">⏳</div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-yellow-800 mb-2">Akun Menunggu Persetujuan Admin</h3>
+                        <p class="text-yellow-700 mb-3">
+                            Terima kasih telah mendaftar sebagai penjual di UMKM Market! Akun Anda saat ini sedang dalam proses verifikasi oleh tim admin kami.
+                        </p>
+                        <div class="bg-yellow-100 border border-yellow-300 rounded-lg p-4">
+                            <p class="text-sm text-yellow-800 font-semibold mb-2">⚠️ Fitur yang Terbatas:</p>
+                            <ul class="text-sm text-yellow-700 space-y-1 ml-4">
+                                <li>• Anda belum dapat menambahkan produk</li>
+                                <li>• Anda belum dapat mengelola toko</li>
+                                <li>• Anda dapat melihat dashboard dan informasi akun</li>
+                            </ul>
+                        </div>
+                        <p class="text-sm text-yellow-600 mt-3">
+                            Proses verifikasi biasanya memakan waktu 1-2 hari kerja. Anda akan menerima notifikasi melalui email setelah akun disetujui.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        @elseif(Auth::user()->status_approval === 'rejected')
+            <div class="mb-6 bg-red-50 border-2 border-red-400 rounded-xl p-6 shadow-lg">
+                <div class="flex items-start">
+                    <div class="text-5xl mr-4">❌</div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-red-800 mb-2">Akun Tidak Disetujui</h3>
+                        <p class="text-red-700 mb-3">
+                            Mohon maaf, pendaftaran Anda sebagai penjual tidak dapat disetujui. Silakan hubungi admin untuk informasi lebih lanjut.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
             <h2 class="text-3xl font-bold text-gray-800 mb-2">Selamat Datang, {{ Auth::user()->name }}! 🎉</h2>
             <p class="text-gray-600 mb-6">Kelola toko dan produk UMKM Anda dengan mudah dari sini.</p>

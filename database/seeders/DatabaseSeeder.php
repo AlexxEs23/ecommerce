@@ -15,31 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Seed categories first
+        // Seed categories and users
         $this->call([
             KategoriSeeder::class,
-        ]);
-
-        // Create test users
-        // Admin user
-        User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@umkm.com',
-            'role' => 'admin',
-        ]);
-
-        // Penjual user
-        User::factory()->create([
-            'name' => 'Penjual User',
-            'email' => 'penjual@umkm.com',
-            'role' => 'penjual',
-        ]);
-
-        // Pembeli user
-        User::factory()->create([
-            'name' => 'Pembeli User',
-            'email' => 'pembeli@umkm.com',
-            'role' => 'pembeli',
+            UserSeeder::class,
         ]);
     }
 }

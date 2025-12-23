@@ -30,19 +30,28 @@ Route::middleware('auth')->group(function () {
         }
     })->name('dashboard');
     
+    // Profile - All Users
+    Route::get('/profile', [App\Http\Controllers\ProfilController::class, 'show'])->name('profile.show');
+    Route::put('/profile', [App\Http\Controllers\ProfilController::class, 'update'])->name('profile.update');
+    
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     
     // Admin Routes - User Management
     Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::resource('users', UserController::class);
+        Route::get('/seller-approval', [App\Http\Controllers\Admin\SellerApprovalController::class, 'index'])->name('seller.approval');
+        Route::post('/seller-approval/{id}/approve', [App\Http\Controllers\Admin\SellerApprovalController::class, 'approve'])->name('seller.approve');
+        Route::post('/seller-approval/{id}/reject', [App\Http\Controllers\Admin\SellerApprovalController::class, 'reject'])->name('seller.reject');
     });
     
-    // CRUD Produk - hanya untuk admin dan penjual
-    Route::get('/produk', [App\Http\Controllers\ProdukController::class, 'index'])->name('produk.index');
-    Route::get('/produk/create', [App\Http\Controllers\ProdukController::class, 'create'])->name('produk.create');
-    Route::post('/produk', [App\Http\Controllers\ProdukController::class, 'store'])->name('produk.store');
-    Route::get('/produk/{id}', [App\Http\Controllers\ProdukController::class, 'show'])->name('produk.show');
-    Route::get('/produk/{id}/edit', [App\Http\Controllers\ProdukController::class, 'edit'])->name('produk.edit');
-    Route::put('/produk/{id}', [App\Http\Controllers\ProdukController::class, 'update'])->name('produk.update');
-    Route::delete('/produk/{id}', [App\Http\Controllers\ProdukController::class, 'destroy'])->name('produk.destroy');
+    // CRUD Produk - hanya untuk admin dan penjual yang sudah approved
+    Route::middleware('approved.seller')->group(function () {
+        Route::get('/produk', [App\Http\Controllers\ProdukController::class, 'index'])->name('produk.index');
+        Route::get('/produk/create', [App\Http\Controllers\ProdukController::class, 'create'])->name('produk.create');
+        Route::post('/produk', [App\Http\Controllers\ProdukController::class, 'store'])->name('produk.store');
+        Route::get('/produk/{id}', [App\Http\Controllers\ProdukController::class, 'show'])->name('produk.show');
+        Route::get('/produk/{id}/edit', [App\Http\Controllers\ProdukController::class, 'edit'])->name('produk.edit');
+        Route::put('/produk/{id}', [App\Http\Controllers\ProdukController::class, 'update'])->name('produk.update');
+        Route::delete('/produk/{id}', [App\Http\Controllers\ProdukController::class, 'destroy'])->name('produk.destroy');
+    });
 });
