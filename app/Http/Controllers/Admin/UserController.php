@@ -37,12 +37,14 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|in:admin,penjual,pembeli',
+            'role' => 'required|in:admin,penjual,user',
             'alamat' => 'nullable|string',
-            'no_telp' => 'nullable|string|max:20',
+            'no_hp' => 'nullable|string|max:20',
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
+        $validated['status'] = 'aktif';
+        $validated['status_approval'] = $request->role === 'penjual' ? 'pending' : 'approved';
 
         User::create($validated);
 
@@ -79,9 +81,9 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'password' => 'nullable|string|min:8|confirmed',
-            'role' => 'required|in:admin,penjual,pembeli',
+            'role' => 'required|in:admin,penjual,user',
             'alamat' => 'nullable|string',
-            'no_telp' => 'nullable|string|max:20',
+            'no_hp' => 'nullable|string|max:20',
         ]);
 
         if (!empty($validated['password'])) {

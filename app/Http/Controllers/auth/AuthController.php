@@ -46,7 +46,6 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email',
             'no_hp' => 'required|string|unique:users,no_hp',
             'alamat' => 'required|string',
-            'role' => 'required|in:user,penjual',
             'password' => 'required|min:6|confirmed'
         ], [
             'name.required' => 'Nama lengkap wajib diisi',
@@ -56,8 +55,6 @@ class AuthController extends Controller
             'no_hp.required' => 'Nomor HP wajib diisi',
             'no_hp.unique' => 'Nomor HP sudah terdaftar',
             'alamat.required' => 'Alamat wajib diisi',
-            'role.required' => 'Silakan pilih role',
-            'role.in' => 'Role tidak valid',
             'password.required' => 'Password wajib diisi',
             'password.min' => 'Password minimal 6 karakter',
             'password.confirmed' => 'Konfirmasi password tidak cocok'
@@ -68,17 +65,13 @@ class AuthController extends Controller
             'email' => $request->email,
             'no_hp' => $request->no_hp,
             'alamat' => $request->alamat,
-            'role' => $request->role,
-            'status_approval' => $request->role === 'penjual' ? 'pending' : 'approved',
+            'role' => 'user', // Default role selalu user
+            'status_approval' => 'approved', // User biasa langsung approved
             'password' => Hash::make($request->password)
         ]);
 
         Auth::login($user);
         $request->session()->regenerate();
-
-        if ($request->role === 'penjual') {
-            return redirect('/dashboard')->with('info', 'Registrasi berhasil! Akun Anda sedang menunggu persetujuan admin. Anda bisa login namun belum bisa mengelola produk.');
-        }
 
         return redirect('/dashboard')->with('success', 'Registrasi berhasil! Selamat datang di UMKM Market.');
     }

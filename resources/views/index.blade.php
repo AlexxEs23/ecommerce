@@ -66,15 +66,43 @@
                             Daftar
                         </a>
                     @else
-                        
-                        <div class="flex items-center gap-2">
-                            <span class="text-gray-700 font-medium">👤 {{ Auth::user()->name }}</span>
-                            <form method="POST" action="{{ route('logout') }}" class="inline">
-                                @csrf
-                                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-medium">
-                                    Keluar
-                                </button>
-                            </form>
+                        <div class="relative group">
+                            <button class="flex items-center gap-2 px-4 py-2 bg-purple-100 rounded-lg hover:bg-purple-200 transition">
+                                <span class="text-2xl">👤</span>
+                                <div class="text-left">
+                                    <p class="text-sm font-semibold text-gray-800">{{ Auth::user()->name }}</p>
+                                    <p class="text-xs text-gray-600">{{ ucfirst(Auth::user()->role) }}</p>
+                                </div>
+                                <span class="text-gray-500">▼</span>
+                            </button>
+                            
+                            <!-- Dropdown Menu -->
+                            <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <div class="py-2">
+                                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-purple-50 transition">
+                                        <span class="text-xl">📊</span>
+                                        <span class="text-gray-700">Dashboard</span>
+                                    </a>
+                                    <a href="{{ route('profile.show') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-purple-50 transition">
+                                        <span class="text-xl">👤</span>
+                                        <span class="text-gray-700">Profil Saya</span>
+                                    </a>
+                                    @if(Auth::user()->role === 'penjual' && Auth::user()->status_approval === 'approved')
+                                        <a href="{{ route('produk.index') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-purple-50 transition">
+                                            <span class="text-xl">📦</span>
+                                            <span class="text-gray-700">Produk Saya</span>
+                                        </a>
+                                    @endif
+                                    <hr class="my-2">
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-red-50 text-red-600 transition">
+                                            <span class="text-xl">🚪</span>
+                                            <span>Keluar</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     @endguest
                 </div>

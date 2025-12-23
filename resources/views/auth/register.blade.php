@@ -112,20 +112,6 @@
                 </div>
 
                 <div class="mb-5">
-                    <label for="role" class="block mb-2 text-gray-700 font-medium text-sm">Daftar Sebagai</label>
-                    <select 
-                        name="role"
-                        id="role" 
-                        required
-                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-600 focus:ring-4 focus:ring-purple-100 transition @error('role') border-red-500 @enderror"
-                    >
-                        <option value="">Pilih role...</option>
-                        <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>Pembeli</option>
-                        <option value="penjual" {{ old('role') == 'penjual' ? 'selected' : '' }}>Penjual/UMKM</option>
-                    </select>
-                </div>
-
-                <div class="mb-5">
                     <label for="password" class="block mb-2 text-gray-700 font-medium text-sm">Password</label>
                     <input 
                         type="password" 

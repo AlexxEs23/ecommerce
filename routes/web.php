@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
     // Profile - All Users
     Route::get('/profile', [App\Http\Controllers\ProfilController::class, 'show'])->name('profile.show');
     Route::put('/profile', [App\Http\Controllers\ProfilController::class, 'update'])->name('profile.update');
+    Route::post('/profile/apply-seller', [App\Http\Controllers\ProfilController::class, 'applySeller'])->name('profile.apply-seller');
     
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     

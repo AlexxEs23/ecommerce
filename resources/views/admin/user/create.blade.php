@@ -90,21 +90,21 @@
                         <option value="">Pilih Role</option>
                         <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>👑 Admin</option>
                         <option value="penjual" {{ old('role') == 'penjual' ? 'selected' : '' }}>🏪 Penjual</option>
-                        <option value="pembeli" {{ old('role') == 'pembeli' ? 'selected' : '' }}>🛒 Pembeli</option>
+                        <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>🛍️ User</option>
                     </select>
                     @error('role')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- No. Telp -->
+                <!-- No. HP -->
                 <div class="mb-6">
-                    <label for="no_telp" class="block text-sm font-medium text-gray-700 mb-2">
-                        Nomor Telepon
+                    <label for="no_hp" class="block text-sm font-medium text-gray-700 mb-2">
+                        Nomor HP
                     </label>
-                    <input type="text" name="no_telp" id="no_telp" value="{{ old('no_telp') }}"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('no_telp') border-red-500 @enderror">
-                    @error('no_telp')
+                    <input type="text" name="no_hp" id="no_hp" value="{{ old('no_hp') }}"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent @error('no_hp') border-red-500 @enderror">
+                    @error('no_hp')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
                 </div>

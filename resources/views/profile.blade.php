@@ -173,6 +173,32 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Daftar Sebagai Penjual (hanya untuk user biasa) -->
+            @if($user->role === 'user')
+                <div class="mt-6 bg-gradient-to-r from-purple-50 to-purple-100 border-2 border-purple-300 p-6 rounded-xl">
+                    <div class="flex items-start gap-4">
+                        <div class="text-5xl">🏪</div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-purple-800 mb-2">Ingin Menjadi Penjual?</h3>
+                            <p class="text-sm text-purple-700 mb-4">
+                                Bergabunglah dengan ribuan UMKM di platform kami! Daftar sebagai penjual dan mulai jual produk Anda ke seluruh Indonesia.
+                            </p>
+                            <ul class="text-sm text-purple-700 space-y-1 mb-4">
+                                <li>✓ Gratis biaya pendaftaran</li>
+                                <li>✓ Dashboard lengkap untuk kelola produk</li>
+                                <li>✓ Jangkau jutaan pembeli potensial</li>
+                            </ul>
+                            <form method="POST" action="{{ route('profile.apply-seller') }}" onsubmit="return confirm('Yakin ingin mendaftar sebagai penjual? Akun Anda akan menunggu persetujuan admin.')">
+                                @csrf
+                                <button type="submit" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-lg hover:shadow-lg transition font-semibold">
+                                    🚀 Daftar Sebagai Penjual Sekarang
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </body>

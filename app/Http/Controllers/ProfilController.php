@@ -41,4 +41,22 @@ class ProfilController extends Controller
         
         return redirect()->route('profile.show')->with('success', 'Profil berhasil diperbarui!');
     }
+    
+    public function applySeller()
+    {
+        $user = User::find(Auth::id());
+        
+        // Cek apakah user sudah penjual
+        if ($user->role === 'penjual') {
+            return redirect()->route('profile.show')->with('error', 'Anda sudah terdaftar sebagai penjual.');
+        }
+        
+        // Update role menjadi penjual dengan status pending
+        User::where('id', Auth::id())->update([
+            'role' => 'penjual',
+            'status_approval' => 'pending'
+        ]);
+        
+        return redirect()->route('profile.show')->with('success', 'Pengajuan sebagai penjual berhasil! Silakan tunggu persetujuan dari admin. Anda akan menerima notifikasi setelah akun Anda disetujui.');
+    }
 }
