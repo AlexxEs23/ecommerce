@@ -15,6 +15,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'loginPost'])->name('login.post');
     Route::get('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/register', [AuthController::class, 'registerPost'])->name('register.post');
+    Route::get('/forgot-password', [AuthController::class, 'forgotPassword']);
     
     // Google OAuth Routes
     Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google');

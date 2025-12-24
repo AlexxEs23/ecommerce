@@ -124,4 +124,9 @@ class AuthController extends Controller
             return redirect('/login')->with('error', 'Gagal login dengan Google. Silakan coba lagi.');
         }
     }
+
+    public function forgotPassword()
+    {
+        return view('auth.forgotpassword');
+    }
 }
