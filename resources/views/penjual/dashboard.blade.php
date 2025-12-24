@@ -148,7 +148,7 @@
             <div class="bg-white rounded-xl shadow-lg p-6">
                 <h3 class="text-xl font-bold text-gray-800 mb-4">Pesanan</h3>
                 <div class="space-y-3">
-                    <a href="#" class="block p-4 border-2 border-gray-200 rounded-lg hover:border-purple-600 hover:bg-purple-50 transition">
+                    <a href="{{ route('penjual.pesanan.index') }}" class="block p-4 border-2 border-gray-200 rounded-lg hover:border-purple-600 hover:bg-purple-50 transition">
                         <div class="flex items-center gap-3">
                             <span class="text-2xl">🆕</span>
                             <div>
@@ -157,7 +157,7 @@
                             </div>
                         </div>
                     </a>
-                    <a href="#" class="block p-4 border-2 border-gray-200 rounded-lg hover:border-purple-600 hover:bg-purple-50 transition">
+                    <a href="{{ route('penjual.pesanan.index') }}" class="block p-4 border-2 border-gray-200 rounded-lg hover:border-purple-600 hover:bg-purple-50 transition">
                         <div class="flex items-center gap-3">
                             <span class="text-2xl">📋</span>
                             <div>

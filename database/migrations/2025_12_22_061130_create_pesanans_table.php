@@ -23,6 +23,9 @@ return new class extends Migration
             $table->decimal('total', 12, 2);
             $table->enum('status', ['menunggu', 'diproses', 'dikirim', 'selesai', 'dibatalkan'])->default('menunggu');
             $table->text('alamat');
+            $table->string('ekspedisi');
+            $table->decimal('ongkir', 12, 2)->default(0);
+            $table->string('resi')->nullable();
             $table->timestamps();
         });
     }

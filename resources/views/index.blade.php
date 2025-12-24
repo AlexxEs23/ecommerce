@@ -79,7 +79,7 @@
                             <!-- Dropdown Menu -->
                             <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div class="py-2">
-                                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-purple-50 transition">
+                                    <a href="{{ route('pembeli.dashboard') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-purple-50 transition">
                                         <span class="text-xl">📊</span>
                                         <span class="text-gray-700">Dashboard</span>
                                     </a>
@@ -221,10 +221,26 @@
                         <div class="flex items-baseline gap-2 mb-2">
                             <span class="text-lg font-bold text-purple-600">Rp {{ number_format($product->harga, 0, ',', '.') }}</span>
                         </div>
-                        <div class="flex items-center gap-1 text-xs text-gray-500">
+                        <div class="flex items-center gap-1 text-xs text-gray-500 mb-3">
                             <span>📦</span>
                             <span>Stok: {{ $product->stok }}</span>
                         </div>
+                        
+                        @auth
+                            @if($product->stok > 0 && $product->status)
+                                <a href="{{ route('checkout.show', $product->id) }}" class="block w-full px-4 py-2 bg-purple-600 text-white text-center text-sm font-semibold rounded-lg hover:bg-purple-700 transition">
+                                    🛒 Checkout
+                                </a>
+                            @else
+                                <button disabled class="block w-full px-4 py-2 bg-gray-300 text-gray-500 text-center text-sm font-semibold rounded-lg cursor-not-allowed">
+                                    Stok Habis
+                                </button>
+                            @endif
+                        @else
+                            <a href="{{ route('login') }}" class="block w-full px-4 py-2 bg-purple-600 text-white text-center text-sm font-semibold rounded-lg hover:bg-purple-700 transition">
+                                🛒 Checkout
+                            </a>
+                        @endauth
                     </div>
                 </div>
                 @empty

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pesanan extends Model
 {
-    protected $table = 'pesanans';
+    protected $table = 'pesanan';
 
     protected $fillable = [
         'user_id',
@@ -19,5 +19,24 @@ class Pesanan extends Model
         'total',
         'status',
         'alamat',
+        'ekspedisi',
+        'ongkir',
+        'resi',
     ];
+
+    /**
+     * Get the user that owns the pesanan
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the produk that belongs to the pesanan
+     */
+    public function produk()
+    {
+        return $this->belongsTo(Produk::class);
+    }
 }

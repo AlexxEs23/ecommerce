@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
         } elseif ($user->role === 'penjual') {
             return view('penjual.dashboard');
         } else {
-            return redirect('/')->with('error', 'Akses ditolak');
+            return redirect()->route('pembeli.dashboard');
         }
     })->name('dashboard');
     
@@ -59,4 +59,28 @@ Route::middleware('auth')->group(function () {
         Route::put('/produk/{id}', [App\Http\Controllers\ProdukController::class, 'update'])->name('produk.update');
         Route::delete('/produk/{id}', [App\Http\Controllers\ProdukController::class, 'destroy'])->name('produk.destroy');
     });
+    
+    // Checkout Routes - untuk pembeli
+    Route::get('/checkout/{id}', [App\Http\Controllers\CheckoutController::class, 'show'])->name('checkout.show');
+    Route::post('/checkout', [App\Http\Controllers\CheckoutController::class, 'store'])->name('checkout.store');
+    Route::get('/checkout/success/{id}', [App\Http\Controllers\CheckoutController::class, 'success'])->name('checkout.success');
+    
+    // Admin - Pesanan Management
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/pesanan', [App\Http\Controllers\CheckoutController::class, 'adminIndex'])->name('pesanan.index');
+        Route::post('/pesanan/{id}/proses', [App\Http\Controllers\CheckoutController::class, 'adminProses'])->name('pesanan.proses');
+        Route::post('/pesanan/{id}/selesai', [App\Http\Controllers\CheckoutController::class, 'adminSelesai'])->name('pesanan.selesai');
+        Route::post('/pesanan/{id}/batal', [App\Http\Controllers\CheckoutController::class, 'adminBatal'])->name('pesanan.batal');
+    });
+    
+    // Penjual - Pesanan Management
+    Route::prefix('penjual')->name('penjual.')->middleware('approved.seller')->group(function () {
+        Route::get('/pesanan', [App\Http\Controllers\CheckoutController::class, 'penjualIndex'])->name('pesanan.index');
+        Route::get('/pesanan/{id}/resi', [App\Http\Controllers\CheckoutController::class, 'penjualResiForm'])->name('pesanan.resi-form');
+        Route::post('/pesanan/{id}/kirim', [App\Http\Controllers\CheckoutController::class, 'penjualKirim'])->name('pesanan.kirim');
+    });
+    
+    // Pembeli Dashboard Routes
+    Route::get('/pembeli/dashboard', [App\Http\Controllers\PembeliController::class, 'dashboard'])->name('pembeli.dashboard');
+    Route::get('/pembeli/pesanan', [App\Http\Controllers\PembeliController::class, 'pesanan'])->name('pembeli.pesanan');
 });

@@ -96,7 +96,7 @@
                 <span class="font-medium">Tambah Produk</span>
             </a>
 
-            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition">
+            <a href="{{ url('/penjual/pesanan') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-purple-700 transition">
                 <span class="text-xl">🛍️</span>
                 <span class="font-medium">Pesanan Masuk</span>
             </a>

@@ -92,7 +92,7 @@
                 <div class="text-5xl mb-4">🛍️</div>
                 <h3 class="text-xl font-bold text-gray-800 mb-2">Kelola Pesanan</h3>
                 <p class="text-gray-600 mb-4 text-sm">Monitor semua transaksi pesanan</p>
-                <a href="#" class="inline-block px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-semibold">
+                <a href="{{ route('admin.pesanan.index') }}" class="inline-block px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-semibold">
                     Lihat Pesanan
                 </a>
             </div>
