@@ -41,4 +41,12 @@ class Produk extends Model
     {
         return $this->belongsTo(Kategori::class);
     }
+
+    /**
+     * Generate slug dari nama produk untuk URL SEO-friendly
+     */
+    public function getSlugAttribute(): string
+    {
+        return \Illuminate\Support\Str::slug($this->nama_produk);
+    }
 }

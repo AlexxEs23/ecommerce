@@ -1,125 +1,20 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UMKM Marketplace - Belanja Online Produk Lokal Indonesia</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @keyframes slideIn {
-            from { transform: translateX(100%); }
-            to { transform: translateX(-100%); }
-        }
-        .animate-slide { animation: slideIn 20s linear infinite; }
-    </style>
-</head>
-<body class="bg-gray-50 min-h-screen">
-    
-    <!-- Top Bar -->
-    <div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white text-sm py-2">
-        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <span>📱 Download Aplikasi</span>
-                <span>|</span>
-                <span>Ikuti Kami: 📘 📷 🐦</span>
-            </div>
-            <div class="flex items-center gap-4">
-                <span>🔔 Notifikasi</span>
-                <span>❓ Bantuan</span>
-            </div>
-        </div>
-    </div>
+@extends('layouts.app')
 
-    <!-- Main Navbar -->
-    <nav class="bg-white shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <!-- Logo -->
-                <div class="flex items-center gap-2">
-                    <span class="text-3xl">🛒</span>
-                    <h1 class="text-2xl font-bold text-purple-700">UMKM Market</h1>
-                </div>
-                
-                <!-- Search Bar -->
-                <div class="flex-1 max-w-2xl mx-8">
-                    <div class="relative">
-                        <input type="text" placeholder="Cari produk, toko, atau kategori..." 
-                               class="w-full px-4 py-2 pr-12 border-2 border-purple-600 rounded-lg focus:outline-none focus:border-purple-700">
-                        <button class="absolute right-0 top-0 h-full px-6 bg-purple-600 text-white rounded-r-lg hover:bg-purple-700 transition">
-                            🔍
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Right Menu -->
-                <div class="flex items-center gap-4">
-                    <button class="relative">
-                        <span class="text-2xl">🛒</span>
-                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
-                    </button>
-                    
-                    @guest
-                        <a href="{{ url('/login') }}" class="px-4 py-2 text-purple-600 border-2 border-purple-600 rounded-lg hover:bg-purple-50 transition font-medium">
-                            Masuk
-                        </a>
-                        <a href="{{ url('/register') }}" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-lg hover:shadow-lg transition font-medium">
-                            Daftar
-                        </a>
-                    @else
-                        <div class="relative group">
-                            <button class="flex items-center gap-2 px-4 py-2 bg-purple-100 rounded-lg hover:bg-purple-200 transition">
-                                <span class="text-2xl">👤</span>
-                                <div class="text-left">
-                                    <p class="text-sm font-semibold text-gray-800">{{ Auth::user()->name }}</p>
-                                    <p class="text-xs text-gray-600">{{ ucfirst(Auth::user()->role) }}</p>
-                                </div>
-                                <span class="text-gray-500">▼</span>
-                            </button>
-                            
-                            <!-- Dropdown Menu -->
-                            <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                                <div class="py-2">
-                                    <a href="{{ route('pembeli.dashboard') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-purple-50 transition">
-                                        <span class="text-xl">📊</span>
-                                        <span class="text-gray-700">Dashboard</span>
-                                    </a>
-                                    <a href="{{ route('profile.show') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-purple-50 transition">
-                                        <span class="text-xl">👤</span>
-                                        <span class="text-gray-700">Profil Saya</span>
-                                    </a>
-                                    @if(Auth::user()->role === 'penjual' && Auth::user()->status_approval === 'approved')
-                                        <a href="{{ route('produk.index') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-purple-50 transition">
-                                            <span class="text-xl">📦</span>
-                                            <span class="text-gray-700">Produk Saya</span>
-                                        </a>
-                                    @endif
-                                    <hr class="my-2">
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <button type="submit" class="w-full flex items-center gap-3 px-4 py-2 hover:bg-red-50 text-red-600 transition">
-                                            <span class="text-xl">🚪</span>
-                                            <span>Keluar</span>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    @endguest
-                </div>
-            </div>
-            
-            <!-- Category Menu -->
-            <div class="border-t border-gray-200 py-3">
-                <div class="flex items-center gap-6 text-sm overflow-x-auto">
-                    <a href="#" class="text-gray-700 hover:text-purple-600 transition font-medium whitespace-nowrap">🏠 Semua Kategori</a>
-                    @foreach($categories as $category)
-                        <a href="#" class="text-gray-700 hover:text-purple-600 transition whitespace-nowrap">{{ $category->nama_kategori }}</a>
-                    @endforeach
-                    <a href="#" class="text-purple-600 font-medium whitespace-nowrap">🔥 Promo Hari Ini</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+@section('title', 'UMKM Marketplace - Belanja Online Produk Lokal Indonesia')
+@section('meta_description', 'Belanja produk UMKM lokal terbaik di Indonesia. Dukung ekonomi lokal dengan berbelanja produk berkualitas dari UMKM di seluruh nusantara.')
+@section('meta_keywords', 'umkm, marketplace indonesia, belanja online, produk lokal, umkm indonesia, e-commerce lokal')
+
+@push('styles')
+<style>
+    @keyframes slideIn {
+        from { transform: translateX(100%); }
+        to { transform: translateX(-100%); }
+    }
+    .animate-slide { animation: slideIn 20s linear infinite; }
+</style>
+@endpush
+
+@section('content')
 
     <!-- Banner Carousel -->
     <section class="bg-gray-100 py-6">
@@ -200,32 +95,35 @@
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 @forelse($recommendedProducts as $product)
                 <!-- Product -->
-                <div class="product-card bg-white border border-gray-200 rounded-xl hover:shadow-xl transition cursor-pointer overflow-hidden group" data-category="{{ $product->kategori_id }}">
-                    <div class="relative">
-                        <div class="aspect-square bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center overflow-hidden">
-                            @if($product->gambar)
-                                <img src="{{ asset('storage/' . $product->gambar) }}" 
-                                     alt="{{ $product->nama_produk }}"
-                                     class="w-full h-full object-cover group-hover:scale-105 transition">
-                            @else
-                                <div class="text-7xl group-hover:scale-105 transition">📦</div>
-                            @endif
+                <div class="product-card bg-white border border-gray-200 rounded-xl hover:shadow-xl transition overflow-hidden group" data-category="{{ $product->kategori_id }}">
+                    <a href="{{ route('produk.detail', ['id' => $product->id, 'slug' => \Illuminate\Support\Str::slug($product->nama_produk)]) }}">
+                        <div class="relative">
+                            <div class="aspect-square bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center overflow-hidden">
+                                @if($product->gambar)
+                                    <img src="{{ asset('storage/' . $product->gambar) }}" 
+                                         alt="{{ $product->nama_produk }}"
+                                         class="w-full h-full object-cover group-hover:scale-105 transition">
+                                @else
+                                    <div class="text-7xl group-hover:scale-105 transition">📦</div>
+                                @endif
+                            </div>
                         </div>
-                    </div>
-                    <div class="p-3">
-                        <h3 class="text-sm font-medium text-gray-800 mb-1 line-clamp-2 h-10">{{ $product->nama_produk }}</h3>
-                        <div class="flex items-center gap-1 mb-2">
-                            <span class="text-yellow-400 text-sm">⭐</span>
-                            <span class="text-xs text-gray-600">{{ $product->kategori->nama_kategori ?? 'Umum' }}</span>
+                        <div class="p-3">
+                            <h3 class="text-sm font-medium text-gray-800 mb-1 line-clamp-2 h-10">{{ $product->nama_produk }}</h3>
+                            <div class="flex items-center gap-1 mb-2">
+                                <span class="text-yellow-400 text-sm">⭐</span>
+                                <span class="text-xs text-gray-600">{{ $product->kategori->nama_kategori ?? 'Umum' }}</span>
+                            </div>
+                            <div class="flex items-baseline gap-2 mb-2">
+                                <span class="text-lg font-bold text-purple-600">Rp {{ number_format($product->harga, 0, ',', '.') }}</span>
+                            </div>
+                            <div class="flex items-center gap-1 text-xs text-gray-500 mb-3">
+                                <span>📦</span>
+                                <span>Stok: {{ $product->stok }}</span>
+                            </div>
                         </div>
-                        <div class="flex items-baseline gap-2 mb-2">
-                            <span class="text-lg font-bold text-purple-600">Rp {{ number_format($product->harga, 0, ',', '.') }}</span>
-                        </div>
-                        <div class="flex items-center gap-1 text-xs text-gray-500 mb-3">
-                            <span>📦</span>
-                            <span>Stok: {{ $product->stok }}</span>
-                        </div>
-                        
+                    </a>
+                    <div class="px-3 pb-3">
                         @auth
                             @if($product->stok > 0 && $product->status)
                                 <a href="{{ route('checkout.show', $product->id) }}" class="block w-full px-4 py-2 bg-purple-600 text-white text-center text-sm font-semibold rounded-lg hover:bg-purple-700 transition">
@@ -259,7 +157,7 @@
         </div>
     </section>
 
-    <!-- Promo Banner -->
+    {{-- Promo Banner --}}
     <section class="bg-gradient-to-r from-purple-600 to-purple-800 py-12">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex items-center justify-between text-white">
@@ -273,111 +171,39 @@
             </div>
         </div>
     </section>
+@endsection
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-5 gap-8 mb-8">
-                <!-- Brand -->
-                <div class="md:col-span-2">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="text-3xl">🛒</span>
-                        <h3 class="text-2xl font-bold">UMKM Market</h3>
-                    </div>
-                    <p class="text-gray-400 mb-4">
-                        Platform marketplace terpercaya untuk UMKM Indonesia. Belanja produk lokal berkualitas dengan harga terbaik.
-                    </p>
-                    <div class="flex gap-3">
-                        <a href="#" class="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center hover:bg-purple-700 transition">
-                            <span>📘</span>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center hover:bg-purple-700 transition">
-                            <span>📷</span>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center hover:bg-purple-700 transition">
-                            <span>🐦</span>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center hover:bg-purple-700 transition">
-                            <span>📱</span>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Tentang -->
-                <div>
-                    <h4 class="font-bold text-lg mb-4">Tentang Kami</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white transition">Tentang UMKM Market</a></li>
-                        <li><a href="#" class="hover:text-white transition">Blog</a></li>
-                        <li><a href="#" class="hover:text-white transition">Karir</a></li>
-                        <li><a href="#" class="hover:text-white transition">Kebijakan Privasi</a></li>
-                        <li><a href="#" class="hover:text-white transition">Syarat & Ketentuan</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Bantuan -->
-                <div>
-                    <h4 class="font-bold text-lg mb-4">Bantuan</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white transition">Pusat Bantuan</a></li>
-                        <li><a href="#" class="hover:text-white transition">Cara Berbelanja</a></li>
-                        <li><a href="#" class="hover:text-white transition">Cara Berjualan</a></li>
-                        <li><a href="#" class="hover:text-white transition">Pembayaran</a></li>
-                        <li><a href="#" class="hover:text-white transition">Pengiriman</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Lainnya -->
-                <div>
-                    <h4 class="font-bold text-lg mb-4">Lainnya</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white transition">Jual di UMKM Market</a></li>
-                        <li><a href="#" class="hover:text-white transition">Flash Sale</a></li>
-                        <li><a href="#" class="hover:text-white transition">Promosi</a></li>
-                        <li><a href="#" class="hover:text-white transition">Lacak Pesanan</a></li>
-                        <li><a href="#" class="hover:text-white transition">Hubungi Kami</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <!-- Copyright -->
-            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 UMKM Market. All Rights Reserved. Made with ❤️ for Indonesian UMKM</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        function filterCategory(categoryId) {
-            // Update active button
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                if (btn.dataset.category == categoryId) {
-                    btn.querySelector('div').classList.add('border-2', 'border-purple-600', 'shadow-2xl');
-                    btn.querySelector('div').classList.remove('border-gray-100');
-                } else {
-                    btn.querySelector('div').classList.remove('border-2', 'border-purple-600', 'shadow-2xl');
-                    btn.querySelector('div').classList.add('border-gray-100');
-                }
-            });
-            
-            // Filter products
-            const products = document.querySelectorAll('.product-card');
-            let visibleCount = 0;
-            
-            products.forEach(product => {
-                const productCategory = product.dataset.category;
-                
-                if (categoryId === 'all' || productCategory == categoryId) {
-                    product.style.display = 'block';
-                    visibleCount++;
-                } else {
-                    product.style.display = 'none';
-                }
-            });
-            
-            // Show message if no products
-            console.log('Filtered:', visibleCount, 'products for category:', categoryId);
+@push('scripts')
+<script>
+function filterCategory(categoryId) {
+    // Update active button
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        if (btn.dataset.category == categoryId) {
+            btn.querySelector('div').classList.add('border-2', 'border-purple-600', 'shadow-2xl');
+            btn.querySelector('div').classList.remove('border-gray-100');
+        } else {
+            btn.querySelector('div').classList.remove('border-2', 'border-purple-600', 'shadow-2xl');
+            btn.querySelector('div').classList.add('border-gray-100');
         }
-    </script>
-</body>
-</html>
+    });
+    
+    // Filter products
+    const products = document.querySelectorAll('.product-card');
+    let visibleCount = 0;
+    
+    products.forEach(product => {
+        const productCategory = product.dataset.category;
+        
+        if (categoryId === 'all' || productCategory == categoryId) {
+            product.style.display = 'block';
+            visibleCount++;
+        } else {
+            product.style.display = 'none';
+        }
+    });
+    
+    // Show message if no products
+    console.log('Filtered:', visibleCount, 'products for category:', categoryId);
+}
+</script>
+@endpush

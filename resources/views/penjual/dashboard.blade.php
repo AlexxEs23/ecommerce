@@ -84,25 +84,25 @@
             <div class="grid md:grid-cols-4 gap-6">
                 <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white">
                     <div class="text-4xl mb-3">📦</div>
-                    <h3 class="text-2xl font-bold mb-1">0</h3>
+                    <h3 class="text-2xl font-bold mb-1">{{ \App\Models\Produk::where('user_id', Auth::id())->count() }}</h3>
                     <p class="text-sm opacity-90">Total Produk</p>
                 </div>
                 
                 <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white">
                     <div class="text-4xl mb-3">🛍️</div>
-                    <h3 class="text-2xl font-bold mb-1">0</h3>
+                    <h3 class="text-2xl font-bold mb-1">{{ \App\Models\Pesanan::whereHas('produk', function($q) { $q->where('user_id', Auth::id()); })->where('status', 'menunggu')->count() }}</h3>
                     <p class="text-sm opacity-90">Pesanan Baru</p>
                 </div>
                 
                 <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white">
                     <div class="text-4xl mb-3">💰</div>
-                    <h3 class="text-2xl font-bold mb-1">Rp 0</h3>
+                    <h3 class="text-2xl font-bold mb-1">Rp {{ number_format(\App\Models\Pesanan::whereHas('produk', function($q) { $q->where('user_id', Auth::id()); })->where('status', 'selesai')->sum('total'), 0, ',', '.') }}</h3>
                     <p class="text-sm opacity-90">Total Pendapatan</p>
                 </div>
                 
                 <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-6 text-white">
                     <div class="text-4xl mb-3">⭐</div>
-                    <h3 class="text-2xl font-bold mb-1">0.0</h3>
+                    <h3 class="text-2xl font-bold mb-1">-</h3>
                     <p class="text-sm opacity-90">Rating Toko</p>
                 </div>
             </div>

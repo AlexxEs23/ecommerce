@@ -11,6 +11,9 @@ use App\Http\Controllers\Admin\UserController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+// Detail Produk Route (accessible by all)
+Route::get('/produk/{id}/{slug?}', [HomeController::class, 'detailProduk'])->name('produk.detail');
+
 // Auth Routes
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');

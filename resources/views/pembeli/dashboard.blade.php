@@ -256,27 +256,6 @@
                         </div>
                     @endif
                 </div>
-                                </div>
-                                <div class="flex-1">
-                                    <div class="flex items-start justify-between mb-2">
-                                        <div>
-                                            <h3 class="font-bold text-gray-800">Laptop Gaming RGB</h3>
-                                            <p class="text-sm text-gray-600">1 unit</p>
-                                        </div>
-                                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Selesai</span>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <span class="font-bold text-purple-600">Rp 15.000.000</span>
-                                        <button class="px-4 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm">
-                                            Beri Ulasan
-                                        </button>
-                                    </div>
-                                    <p class="text-xs text-gray-500 mt-2">📅 20 Des 2025</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Keranjang Preview -->
                 
