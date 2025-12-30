@@ -23,14 +23,19 @@ class ApprovedSeller
         
         $user = Auth::user();
         
-        // Jika bukan penjual, lanjutkan
-        if ($user->role !== 'penjual') {
+        // Admin selalu bisa akses
+        if ($user->role === 'admin') {
             return $next($request);
+        }
+        
+        // Jika bukan penjual dan bukan admin, tidak bisa akses
+        if ($user->role !== 'penjual') {
+            abort(403, 'Akses ditolak. Anda harus menjadi penjual untuk mengakses halaman ini.');
         }
         
         // Jika penjual tapi belum approved
         if ($user->status_approval !== 'approved') {
-            return redirect('/dashboard')->with('error', 'Akun Anda masih menunggu persetujuan admin. Anda belum dapat mengelola produk.');
+            return redirect()->route('dashboard')->with('error', 'Akun Anda masih menunggu persetujuan admin. Anda belum dapat mengelola produk.');
         }
         
         return $next($request);

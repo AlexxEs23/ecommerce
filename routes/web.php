@@ -13,9 +13,6 @@ Route::post('/midtrans/callback', [App\Http\Controllers\MidtransWebhookControlle
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Detail Produk Route (accessible by all)
-Route::get('/produk/{id}/{slug?}', [HomeController::class, 'detailProduk'])->name('produk.detail');
-
 // Auth Routes
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -69,10 +66,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/produk', [App\Http\Controllers\ProdukController::class, 'index'])->name('produk.index');
         Route::get('/produk/create', [App\Http\Controllers\ProdukController::class, 'create'])->name('produk.create');
         Route::post('/produk', [App\Http\Controllers\ProdukController::class, 'store'])->name('produk.store');
-        Route::get('/produk/{id}', [App\Http\Controllers\ProdukController::class, 'show'])->name('produk.show');
         Route::get('/produk/{id}/edit', [App\Http\Controllers\ProdukController::class, 'edit'])->name('produk.edit');
         Route::put('/produk/{id}', [App\Http\Controllers\ProdukController::class, 'update'])->name('produk.update');
         Route::delete('/produk/{id}', [App\Http\Controllers\ProdukController::class, 'destroy'])->name('produk.destroy');
+        Route::get('/produk/{id}', [App\Http\Controllers\ProdukController::class, 'show'])->name('produk.show');
     });
     
     // Checkout Routes - untuk pembeli
@@ -103,3 +100,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/pembeli/dashboard', [App\Http\Controllers\PembeliController::class, 'dashboard'])->name('pembeli.dashboard');
     Route::get('/pembeli/pesanan', [App\Http\Controllers\PembeliController::class, 'pesanan'])->name('pembeli.pesanan');
 });
+
+// Detail Produk Route (accessible by all) - HARUS DI BAWAH route authenticated untuk menghindari konflik
+Route::get('/produk/{id}/{slug?}', [HomeController::class, 'detailProduk'])->name('produk.detail');
