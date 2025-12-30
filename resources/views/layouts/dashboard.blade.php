@@ -44,7 +44,7 @@
     @include('components.navbar')
     
     {{-- Main Layout with Sidebar --}}
-    <div class="flex min-h-screen">
+    <div class="flex">
         {{-- Sidebar --}}
         @include('components.sidebar')
         

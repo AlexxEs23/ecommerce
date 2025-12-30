@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<div class="w-64 bg-gradient-to-b from-purple-800 to-purple-900 text-white min-h-screen fixed left-0 top-0 overflow-y-auto">
+<aside class="w-64 bg-gradient-to-b from-purple-800 to-purple-900 text-white min-h-screen sticky top-0 overflow-y-auto" id="sidebar" role="complementary">
     <!-- Logo & Brand -->
     <div class="p-6 border-b border-purple-700">
         <div class="flex items-center gap-3">
@@ -128,4 +128,4 @@
             </form>
         </div>
     </nav>
-</div>
+</aside>
