@@ -59,16 +59,21 @@
         @endif
 
         <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
-            <div class="bg-yellow-100 rounded-lg p-4">
+        <div class="grid grid-cols-1 md:grid-cols-6 gap-4 mb-8">
+            <div class="bg-orange-100 rounded-lg p-4">
                 <div class="text-2xl mb-2">⏳</div>
-                <div class="text-2xl font-bold text-yellow-700">{{ $pesanan->where('status', 'menunggu')->count() }}</div>
-                <div class="text-sm text-yellow-600">Menunggu</div>
+                <div class="text-2xl font-bold text-orange-700">{{ $pesanan->where('status', 'pending_payment')->count() }}</div>
+                <div class="text-sm text-orange-600">Belum Bayar</div>
             </div>
             <div class="bg-blue-100 rounded-lg p-4">
+                <div class="text-2xl mb-2">💳</div>
+                <div class="text-2xl font-bold text-blue-700">{{ $pesanan->where('status', 'dibayar')->count() }}</div>
+                <div class="text-sm text-blue-600">Dibayar</div>
+            </div>
+            <div class="bg-yellow-100 rounded-lg p-4">
                 <div class="text-2xl mb-2">🔄</div>
-                <div class="text-2xl font-bold text-blue-700">{{ $pesanan->where('status', 'diproses')->count() }}</div>
-                <div class="text-sm text-blue-600">Diproses</div>
+                <div class="text-2xl font-bold text-yellow-700">{{ $pesanan->where('status', 'diproses')->count() }}</div>
+                <div class="text-sm text-yellow-600">Diproses</div>
             </div>
             <div class="bg-purple-100 rounded-lg p-4">
                 <div class="text-2xl mb-2">🚚</div>
@@ -125,12 +130,16 @@
                                     Rp {{ number_format($item->total, 0, ',', '.') }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    @if($item->status == 'menunggu')
-                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                            ⏳ Menunggu
+                                    @if($item->status == 'pending_payment')
+                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">
+                                            ⏳ Belum Bayar
+                                        </span>
+                                    @elseif($item->status == 'dibayar')
+                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            💳 Dibayar
                                         </span>
                                     @elseif($item->status == 'diproses')
-                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
                                             🔄 Diproses
                                         </span>
                                     @elseif($item->status == 'dikirim')
@@ -149,7 +158,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <div class="flex gap-2">
-                                        @if($item->status == 'menunggu')
+                                        @if(in_array($item->status, ['dibayar', 'menunggu']))
                                             <form action="{{ route('admin.pesanan.proses', $item->id) }}" method="POST" class="inline">
                                                 @csrf
                                                 <button type="submit" class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition text-xs">

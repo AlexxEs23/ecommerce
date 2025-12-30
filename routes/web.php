@@ -8,6 +8,8 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\UserController;
 
+// Midtrans Webhook Route (no auth middleware)
+Route::post('/midtrans/callback', [App\Http\Controllers\MidtransWebhookController::class, 'handle'])->name('midtrans.callback');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -77,6 +79,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout/{id}', [App\Http\Controllers\CheckoutController::class, 'show'])->name('checkout.show');
     Route::post('/checkout', [App\Http\Controllers\CheckoutController::class, 'store'])->name('checkout.store');
     Route::get('/checkout/success/{id}', [App\Http\Controllers\CheckoutController::class, 'success'])->name('checkout.success');
+    Route::get('/checkout/payment/{id}', [App\Http\Controllers\CheckoutController::class, 'payment'])->name('checkout.payment');
+    Route::get('/checkout/payment/callback/{id}', [App\Http\Controllers\CheckoutController::class, 'paymentCallback'])->name('checkout.payment.callback');
+    Route::get('/checkout/regenerate-token/{id}', [App\Http\Controllers\CheckoutController::class, 'regenerateToken'])->name('checkout.regenerate-token');
+    Route::post('/pesanan/{id}/confirm-received', [App\Http\Controllers\CheckoutController::class, 'confirmReceived'])->name('pesanan.confirm-received');
     
     // Admin - Pesanan Management
     Route::prefix('admin')->name('admin.')->group(function () {

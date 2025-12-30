@@ -59,16 +59,21 @@
         @endif
 
         <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
-            <div class="bg-yellow-100 rounded-lg p-4">
+        <div class="grid grid-cols-1 md:grid-cols-6 gap-4 mb-8">
+            <div class="bg-orange-100 rounded-lg p-4">
                 <div class="text-2xl mb-2">⏳</div>
-                <div class="text-2xl font-bold text-yellow-700">{{ $pesanan->where('status', 'menunggu')->count() }}</div>
-                <div class="text-sm text-yellow-600">Menunggu</div>
+                <div class="text-2xl font-bold text-orange-700">{{ $pesanan->where('status', 'pending_payment')->count() }}</div>
+                <div class="text-sm text-orange-600">Belum Bayar</div>
             </div>
             <div class="bg-blue-100 rounded-lg p-4">
+                <div class="text-2xl mb-2">💳</div>
+                <div class="text-2xl font-bold text-blue-700">{{ $pesanan->where('status', 'dibayar')->count() }}</div>
+                <div class="text-sm text-blue-600">Dibayar</div>
+            </div>
+            <div class="bg-yellow-100 rounded-lg p-4">
                 <div class="text-2xl mb-2">🔄</div>
-                <div class="text-2xl font-bold text-blue-700">{{ $pesanan->where('status', 'diproses')->count() }}</div>
-                <div class="text-sm text-blue-600">Siap Kirim</div>
+                <div class="text-2xl font-bold text-yellow-700">{{ $pesanan->where('status', 'diproses')->count() }}</div>
+                <div class="text-sm text-yellow-600">Siap Kirim</div>
             </div>
             <div class="bg-purple-100 rounded-lg p-4">
                 <div class="text-2xl mb-2">🚚</div>
@@ -95,12 +100,16 @@
                         <div>
                             <div class="flex items-center gap-2 mb-2">
                                 <h3 class="text-lg font-bold text-gray-800">Pesanan #{{ $item->id }}</h3>
-                                @if($item->status == 'menunggu')
-                                    <span class="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                        ⏳ Menunggu Diproses
+                                @if($item->status == 'pending_payment')
+                                    <span class="px-3 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-800">
+                                        ⏳ Belum Bayar
+                                    </span>
+                                @elseif($item->status == 'dibayar')
+                                    <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                        💳 Sudah Dibayar
                                     </span>
                                 @elseif($item->status == 'diproses')
-                                    <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                    <span class="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
                                         🔄 Siap Dikirim
                                     </span>
                                 @elseif($item->status == 'dikirim')
@@ -144,7 +153,15 @@
                             <div>
                                 <p class="text-sm text-gray-600 mb-1">Ekspedisi:</p>
                                 <p class="font-semibold text-gray-800 uppercase">{{ $item->ekspedisi }}</p>
-                                <p class="text-sm text-gray-600">{{ $item->metode_pembayaran == 'transfer_bank' ? 'Transfer Bank' : 'COD' }}</p>
+                                <p class="text-sm text-gray-600">
+                                    @if($item->metode_pembayaran == 'qris')
+                                        QRIS / E-Wallet
+                                    @elseif($item->metode_pembayaran == 'transfer_bank')
+                                        Transfer Bank
+                                    @else
+                                        COD
+                                    @endif
+                                </p>
                             </div>
                             <div class="md:col-span-2">
                                 <p class="text-sm text-gray-600 mb-1">Alamat Pengiriman:</p>

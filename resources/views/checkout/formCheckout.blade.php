@@ -244,7 +244,19 @@
                         
                         <div class="space-y-3">
                             <label class="flex items-start gap-3 p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-600 transition">
-                                <input type="radio" name="metode_pembayaran" value="transfer_bank" required class="mt-1" checked>
+                                <input type="radio" name="metode_pembayaran" value="qris" required class="mt-1">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="text-xl">📱</span>
+                                        <span class="font-semibold text-gray-800">QRIS / E-Wallet</span>
+                                        <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full font-semibold">Recommended</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600">Bayar dengan QRIS, GoPay, ShopeePay, dan e-wallet lainnya</p>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-start gap-3 p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-600 transition">
+                                <input type="radio" name="metode_pembayaran" value="transfer_bank" required class="mt-1">
                                 <div class="flex-1">
                                     <div class="flex items-center gap-2 mb-1">
                                         <span class="text-xl">🏦</span>

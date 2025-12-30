@@ -107,8 +107,11 @@
                 <button class="px-6 py-2 bg-purple-600 text-white rounded-lg font-semibold whitespace-nowrap" data-filter="all">
                     Semua ({{ $pesanan->count() }})
                 </button>
-                <button class="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 whitespace-nowrap" data-filter="menunggu">
-                    ⏳ Menunggu ({{ $pesanan->where('status', 'menunggu')->count() }})
+                <button class="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 whitespace-nowrap" data-filter="pending_payment">
+                    ⏳ Belum Bayar ({{ $pesanan->where('status', 'pending_payment')->count() }})
+                </button>
+                <button class="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 whitespace-nowrap" data-filter="dibayar">
+                    💳 Dibayar ({{ $pesanan->where('status', 'dibayar')->count() }})
                 </button>
                 <button class="px-6 py-2 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 whitespace-nowrap" data-filter="diproses">
                     🔄 Diproses ({{ $pesanan->where('status', 'diproses')->count() }})
@@ -133,13 +136,17 @@
                         <div>
                             <div class="flex items-center gap-2 mb-2">
                                 <h3 class="text-lg font-bold text-gray-800">Pesanan #{{ $order->id }}</h3>
-                                @if($order->status == 'menunggu')
-                                    <span class="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                        ⏳ Menunggu Konfirmasi
+                                @if($order->status == 'pending_payment')
+                                    <span class="px-3 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-800">
+                                        ⏳ Belum Bayar
+                                    </span>
+                                @elseif($order->status == 'dibayar')
+                                    <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                        💳 Dibayar - Menunggu Diproses
                                     </span>
                                 @elseif($order->status == 'diproses')
-                                    <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
-                                        🔄 Diproses
+                                    <span class="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                        🔄 Sedang Diproses
                                     </span>
                                 @elseif($order->status == 'dikirim')
                                     <span class="px-3 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">
@@ -199,7 +206,15 @@
                                 <div>
                                     <p class="text-gray-600">Ekspedisi:</p>
                                     <p class="font-semibold text-gray-800 uppercase">{{ $order->ekspedisi }}</p>
-                                    <p class="text-gray-600">{{ $order->metode_pembayaran == 'transfer_bank' ? 'Transfer Bank' : 'COD' }}</p>
+                                    <p class="text-gray-600">
+                                        @if($order->metode_pembayaran == 'qris')
+                                            QRIS / E-Wallet
+                                        @elseif($order->metode_pembayaran == 'transfer_bank')
+                                            Transfer Bank
+                                        @else
+                                            COD
+                                        @endif
+                                    </p>
                                 </div>
                                 @if($order->resi)
                                     <div>
@@ -207,6 +222,12 @@
                                         <p class="font-semibold text-purple-600">{{ $order->resi }}</p>
                                         <button onclick="copyResi('{{ $order->resi }}')" class="text-xs text-purple-600 hover:text-purple-700">
                                             📋 Salin Resi
+                            @if($order->status == 'pending_payment' && $order->metode_pembayaran == 'qris')
+                                <a href="{{ route('checkout.regenerate-token', $order->id) }}" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-lg hover:shadow-lg transition text-sm font-semibold">
+                                    💳 Bayar Sekarang
+                                </a>
+                            @endif
+                            
                                         </button>
                                     </div>
                                 @endif
@@ -223,6 +244,15 @@
                                 <a href="#" class="px-4 py-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition text-sm font-semibold">
                                     Lacak Paket
                                 </a>
+                            @endif
+                            
+                            @if($order->status == 'dikirim')
+                                <form action="{{ route('pesanan.confirm-received', $order->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin telah menerima pesanan ini?')">
+                                    @csrf
+                                    <button type="submit" class="px-4 py-2 bg-green-100 text-green-600 rounded-lg hover:bg-green-200 transition text-sm font-semibold">
+                                        ✓ Pesanan Diterima
+                                    </button>
+                                </form>
                             @endif
                             
                             @if($order->status == 'selesai')

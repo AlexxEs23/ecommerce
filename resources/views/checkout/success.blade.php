@@ -30,6 +30,15 @@
     </nav>
 
     <div class="max-w-4xl mx-auto px-4 py-12">
+        @if(session('success'))
+            <div class="mb-6 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">✅</span>
+                    <p class="font-semibold">{{ session('success') }}</p>
+                </div>
+            </div>
+        @endif
+
         <!-- Success Icon & Message -->
         <div class="text-center mb-8">
             <div class="inline-flex items-center justify-center w-24 h-24 bg-green-100 rounded-full mb-6">
@@ -37,6 +46,7 @@
             </div>
             <h1 class="text-4xl font-bold text-gray-800 mb-4">Pesanan Berhasil Dibuat!</h1>
             <p class="text-lg text-gray-600">Terima kasih telah berbelanja di UMKM Market</p>
+            <p class="text-sm text-gray-500 mt-2">Status: <span class="font-bold text-purple-600">{{ ucfirst(str_replace('_', ' ', $pesanan->status)) }}</span></p>
         </div>
 
         <!-- Order Details Card -->
@@ -139,7 +149,7 @@
             <a href="{{ route('home') }}" class="px-6 py-3 border-2 border-purple-600 text-purple-600 rounded-lg font-semibold hover:bg-purple-50 transition text-center">
                 🏠 Kembali ke Beranda
             </a>
-            <a href="{{ route('pembeli.dashboard') }}" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-lg font-semibold hover:shadow-lg transition text-center">
+            <a href="{{ route('pembeli.pesanan') }}" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-lg font-semibold hover:shadow-lg transition text-center">
                 📋 Lihat Pesanan Saya
             </a>
         </div>

@@ -22,6 +22,7 @@ class Pesanan extends Model
         'ekspedisi',
         'ongkir',
         'resi',
+        'snap_token',
     ];
 
     /**

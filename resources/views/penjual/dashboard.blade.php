@@ -90,7 +90,7 @@
                 
                 <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white">
                     <div class="text-4xl mb-3">🛍️</div>
-                    <h3 class="text-2xl font-bold mb-1">{{ \App\Models\Pesanan::whereHas('produk', function($q) { $q->where('user_id', Auth::id()); })->where('status', 'menunggu')->count() }}</h3>
+                    <h3 class="text-2xl font-bold mb-1">{{ \App\Models\Pesanan::whereHas('produk', function($q) { $q->where('user_id', Auth::id()); })->whereIn('status', ['pending_payment', 'dibayar'])->count() }}</h3>
                     <p class="text-sm opacity-90">Pesanan Baru</p>
                 </div>
                 

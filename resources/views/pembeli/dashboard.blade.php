@@ -222,10 +222,12 @@
                                                     <h3 class="font-bold text-gray-800">{{ $order->produk->nama_produk }}</h3>
                                                     <p class="text-sm text-gray-600">{{ $order->jumlah }} unit</p>
                                                 </div>
-                                                @if($order->status == 'menunggu')
-                                                    <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-semibold">Menunggu</span>
+                                                @if($order->status == 'pending_payment')
+                                                    <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-semibold">Belum Bayar</span>
+                                                @elseif($order->status == 'dibayar')
+                                                    <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">Dibayar</span>
                                                 @elseif($order->status == 'diproses')
-                                                    <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">Diproses</span>
+                                                    <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-semibold">Diproses</span>
                                                 @elseif($order->status == 'dikirim')
                                                     <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold">Dikirim</span>
                                                 @elseif($order->status == 'selesai')

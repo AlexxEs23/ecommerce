@@ -25,7 +25,7 @@ class PembeliController extends Controller
         // Get order statistics
         $totalOrders = Pesanan::where('user_id', Auth::id())->count();
         $activeOrders = Pesanan::where('user_id', Auth::id())
-            ->whereIn('status', ['menunggu', 'diproses', 'dikirim'])
+            ->whereIn('status', ['pending_payment', 'dibayar', 'diproses', 'dikirim'])
             ->count();
         $completedOrders = Pesanan::where('user_id', Auth::id())
             ->where('status', 'selesai')
